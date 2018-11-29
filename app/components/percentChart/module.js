@@ -1,4 +1,4 @@
-const percentChart = angular.module("percentChart")
+const percentChart = angular.module("percentChart", [])
     .component('percentChartComponent', {
         // isolated scope binding
         bindings: {
@@ -7,9 +7,27 @@ const percentChart = angular.module("percentChart")
 
         // Inline template which is binded to message variable
         // in the component controller
-        template: '<div>Hello {{$ctrl.message}}</div>',
+        template: `
+            <div flex-xs flex-gt-xs="25" layout="column">
+                <md-card>
+                    <img ng-src="app/img/pchart-placeholder.png" class="md-card-image" alt="Washed Out">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Percent Chart</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <p>
+                            This is a sample of a percent chart inside an Agular 1.5 app using Angular Material
+                        </p>
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button>Details</md-button>
+                        <md-button>Hide Chart</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        `,
 
         // The controller that handles our component logic        
     }).controller('PercentChartController', function ($scope) { });
-
-export default percentChart;
