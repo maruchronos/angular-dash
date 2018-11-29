@@ -12,9 +12,12 @@
     <script src="node_modules/angular-aria/angular-aria.min.js"></script>
     <script src="node_modules/angular-messages/angular-messages.min.js"></script>
 
+    <!-- Charts -->
+    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
     <!-- Angular Material Library -->
     <script src="node_modules/angular-material/angular-material.min.js"></script>
-    <script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>
 
     <title>Angular APP</title>
 </head>
@@ -39,16 +42,18 @@
                     </md-button>
                 </div>
             </md-toolbar>
-            <div ng-view>
-                <input type="text" name="cor" id="color" ng-model="color">
-                <sample-component message="{{color}}"></sample-component>
-            </div>
+            <md-content flex layout-padding>
+                <div ng-view>
+                    <percent-chart-component></percent-chart-component>                    
+                </div>
+            </md-content>
         </md-content>
     </div>
 
 
-    <!-- <script src="app/controllers/app.js"></script> -->
-    <script src="app/components/sampleComponent/sampleComponent.js"></script>
+    <script src="app/components/doughnut/index.js"></script>
+    <script src="app/components/percentChart/module.js"></script>
+    <script src="app/module.js"></script>
 </body>
 
 </html>
