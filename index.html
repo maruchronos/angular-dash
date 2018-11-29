@@ -43,8 +43,9 @@
                 </div>
             </md-toolbar>
             <md-content flex layout-padding>
-                <div ng-view>
-                    <percent-chart-component></percent-chart-component>                    
+                <div ng-view layout="row">
+                    <percent-chart-component title="Doughnut Chart"></percent-chart-component>
+                    <percent-chart-component></percent-chart-component>
                 </div>
             </md-content>
         </md-content>

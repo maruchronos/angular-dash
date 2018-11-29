@@ -1,4 +1,4 @@
-angular.module("percentChart", ['chart.js','doughnut'])
+angular.module("percentChart", ['chart.js', 'doughnut'])
     .component('percentChartComponent', {
         // isolated scope binding
         bindings: {
@@ -8,13 +8,12 @@ angular.module("percentChart", ['chart.js','doughnut'])
         // Inline template which is binded to message variable
         // in the component controller
         template: `
-            <div flex-xs flex-gt-xs="30" layout="column">
+            <div flex layout="column">
                 <md-card ng-controller="DoughnutCtrl">
-                    <!-- <img ng-src="app/img/pchart-placeholder.png" class="md-card-image" alt="Washed Out"> -->                    
                     <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-click="onClick"> </canvas> 
                     <md-card-title>
                         <md-card-title-text>
-                            <span class="md-headline">Percent Chart</span>
+                            <span class="md-headline">Doughnut Chart</span>
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
@@ -29,8 +28,6 @@ angular.module("percentChart", ['chart.js','doughnut'])
                 </md-card>
             </div>
         `,
-
-        // The controller that handles our component logic        
-    }).controller('PercentChartController', function ($scope) { });
-
-// console.log(document.getElementById("doughnut"));
+    }).controller('PercentChartController', function ($scope) {
+        $scope.title = 'title'
+    });
