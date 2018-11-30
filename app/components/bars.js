@@ -3,7 +3,7 @@ const bars = angular.module("bars", ['chart.js']);
 
 // TODO - Read data from API 
 // Controller to manipulate data
-bars.controller("barsCtrl", function ($scope) {
+bars.controller("barsCtrl", function ($scope, $http) {
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
@@ -11,6 +11,13 @@ bars.controller("barsCtrl", function ($scope) {
         [28, 48, 40, 19, 86, 27, 90]
     ];
     $scope.colors = ['#ff6384', '#ff9f40'];
+    $http.get("https://parallelum.com.br/fipe/api/v1/carros/marcas/59/modelos/5940/anos/2014-3")
+        .then(result => {
+            if(result.status === 200){
+                console.log(result.data)
+            }
+        })
+        .catch(err => console.log(err));
   }
 );
 
