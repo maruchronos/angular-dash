@@ -34,6 +34,4 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
                 </md-card>
             </div>
         `,
-    }).controller('chartCardController', function ($scope) { 
-        $scope.donut = ($scope.type === 'donut');
-    });
+    }).controller('chartCardController', function ($scope) { });

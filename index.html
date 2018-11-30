@@ -34,9 +34,6 @@
                         <span>Angular 1.5 - Dashboard</span>
                     </h2>
                     <span flex></span>
-                    <md-button class="md-icon-button" aria-label="Favorite">
-                        <md-icon md-svg-icon="app/img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-                    </md-button>
                     <md-button class="md-icon-button" aria-label="More">
                         <md-icon md-svg-icon="app/img/icons/more_vert.svg"></md-icon>
                     </md-button>
@@ -46,15 +43,19 @@
                 <div ng-view layout="row">
                     <chart-card
                         title="Doughnut Chart"
-                        type="donut"
                         description="This is a sample of a Donut chart inside an Agular 1.5 app using Angular Material">
                     </chart-card>
+                    <bar-chart
+                        title="Bars Chart"
+                        description="Now, this is a sample of a Bars chart. Also using angular-chart, a wrapper to Chart.js">
+                    </bar-chart>
                 </div>
             </md-content>
         </md-content>
     </div>
 
 
+    <script src="app/components/bars.js"></script>
     <script src="app/components/doughnut.js"></script>
     <script src="app/components/chartCard.js"></script>
     <script src="app/module.js"></script>
