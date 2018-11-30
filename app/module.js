@@ -1,3 +1,3 @@
-const app = angular.module("app", ['ngMaterial', 'percentChart']);
+const app = angular.module("app", ['ngMaterial', 'chartCardModule']);
 
-app.controller('AppCtrl', function ($scope) { });
+app.controller('appController', function ($scope) { });
