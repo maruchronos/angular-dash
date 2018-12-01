@@ -8,6 +8,11 @@ bars.controller("barsCtrl", function ($scope, $http) {
     $scope.frameworks = [];
     $scope.stars = [];
     $scope.colors = ['#ff6384', '#36a2ff', '#4bffc0'];
+    $scope.options = {
+        legend: {
+          display: true
+        }
+    };
 
     //Get data from frebase API
     $http.get("https://angulardash-b52ea.firebaseio.com/stars.json")
@@ -56,6 +61,7 @@ bars.component('barChart', {
                     class="chart chart-bar" 
                     chart-data="stars"
                     chart-series="frameworks"
+                    chart-options="options"
                     chart-labels="years"
                     chart-colors="colors"
                     chart-click="onClick"> </canvas> 

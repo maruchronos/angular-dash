@@ -17,6 +17,7 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
                         class="chart chart-doughnut" 
                         chart-data="data" 
                         chart-labels="labels"
+                        chart-options="options"
                         chart-colors="colors"
                         chart-click="onClick"> </canvas> 
                     <md-card-title>

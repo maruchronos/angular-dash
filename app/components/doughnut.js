@@ -4,6 +4,11 @@ doughnut.controller("DoughnutCtrl", function ($scope, $http) {
     $scope.colors = ['#ff6384', '#ff9f40', '#9966ff', '#36a2eb', '#4bc0c0'];
     $scope.data = [];
     $scope.labels = [];
+    $scope.options = {
+      legend: {
+        display: true
+      }
+    };
 
     // dados carregados com base em https://2017.stateofjs.com/2017/front-end/worldwide/
     $http.get("https://angulardash-b52ea.firebaseio.com/frameworks.json")
