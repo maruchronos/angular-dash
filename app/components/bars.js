@@ -56,6 +56,9 @@ bars.component('barChart', {
     template: `
         <div flex layout="column">
             <md-card ng-controller="barsCtrl">
+                <md-toolbar md-scroll-shrink>
+                    <div class="md-toolbar-tools">Github Stars by Framework</div>
+                </md-toolbar>
                 <canvas 
                     id="bar" 
                     class="chart chart-bar" 
@@ -72,11 +75,7 @@ bars.component('barChart', {
                 </md-card-title>
                 <md-card-content>
                     <p>{{$ctrl.description}}</p>
-                </md-card-content>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Details</md-button>
-                    <md-button>Hide Chart</md-button>
-                </md-card-actions>
+                </md-card-content>                
             </md-card>
         </div>
     `,

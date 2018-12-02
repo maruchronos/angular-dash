@@ -12,6 +12,9 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
         template: `
             <div flex layout="column">
                 <md-card ng-controller="DoughnutCtrl">
+                    <md-toolbar md-scroll-shrink>
+                        <div class="md-toolbar-tools">JS Frameworks Usage</div>
+                    </md-toolbar>
                     <canvas 
                         id="doughnut" 
                         class="chart chart-doughnut" 
@@ -28,10 +31,6 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
                     <md-card-content>
                         <p>{{$ctrl.description}}</p>
                     </md-card-content>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Details</md-button>
-                        <md-button>Hide Chart</md-button>
-                    </md-card-actions>
                 </md-card>
             </div>
         `,

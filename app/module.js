@@ -1,5 +1,7 @@
 const app = angular.module("app", [
-    'ngMaterial', 
+    'ngMaterial',
+    'headerModule',
+    'sidebarModule',
     'chartCardModule',
     'bars',
     'ngRoute'
