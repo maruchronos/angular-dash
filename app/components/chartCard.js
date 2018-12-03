@@ -3,7 +3,6 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
         // isolated scope binding
         bindings: {
             title: '@',
-            description: '@',
             type: '@'
         },
 
@@ -29,7 +28,11 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
-                        <p>{{$ctrl.description}}</p>
+                        <p>
+                            This is a sample of a Donut chart inside an Agular 1.5, using Angular Material and angular-chart, 
+                            a wrapper to Chart.js. Here I'm using firebase sync objects
+                            to track real-time changes.
+                        </p>
                     </md-card-content>
                 </md-card>
             </div>
