@@ -8,10 +8,7 @@ angular.module("headerModule", []).component('appHeader', {
             <h2>
                 <span>Angular 1.5 - Dashboard</span>
             </h2>
-            <span flex></span>
-            <md-button class="md-icon-button" aria-label="More">
-                <md-icon md-svg-icon="app/img/icons/more_vert.svg"></md-icon>
-            </md-button>
+            <span flex></span>            
         </div>
     </md-toolbar>`
 }).controller('headerController', function($scope, $mdSidenav) {
