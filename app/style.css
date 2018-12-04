@@ -1,6 +1,9 @@
 .toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
     color: white; 
 }
+#menu {
+    padding: 0;
+}
 
 #menu .md-button {
     border-radius: 0;
@@ -16,4 +19,8 @@
     text-decoration: none;
     white-space: normal;
     width: 100%;
+}
+
+.md-button.active {
+    background: #267ED5;    
 }

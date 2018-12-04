@@ -31,8 +31,8 @@ app.config(function config($routeProvider, $locationProvider) {
                 ">
             </bar-chart>`
         }).
-        when('/charts', {
-        templateUrl: '/pages/charts.html'
+        when('/list', {
+        template: '/pages/charts.html'
         }).
         otherwise('/');
     $locationProvider.html5Mode({
