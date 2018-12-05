@@ -14,6 +14,8 @@ bars.controller("barsCtrl", ($scope, $http) => {
         }
     };
 
+    $scope.chartLoaded = false;
+
     //Get data from frebase API
     $http.get("https://angulardash-b52ea.firebaseio.com/stars.json")
         .then(result => {
@@ -37,6 +39,8 @@ bars.controller("barsCtrl", ($scope, $http) => {
                 // Define Stars
                 $scope.stars = arrayResult.map(star => Object.values(star));
 
+                $scope.chartLoaded = true;
+
             }
         })
         .catch(err => console.log(err));
@@ -59,6 +63,10 @@ bars.component('barChart', {
                 <md-toolbar md-scroll-shrink>
                     <div class="md-toolbar-tools">Github Stars by Framework</div>
                 </md-toolbar>
+                <div layout="row" layout-align="center center" ng-if="!chartLoaded">
+                    <img class="placeholder" src="app/img/bars-placeholder.png" />
+                </div>
+                <div ng-if="chartLoaded">
                 <canvas 
                     id="bar" 
                     class="chart chart-bar" 
@@ -68,6 +76,7 @@ bars.component('barChart', {
                     chart-labels="years"
                     chart-colors="colors"
                     chart-click="onClick"> </canvas> 
+                </div>
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{$ctrl.title}}</span>

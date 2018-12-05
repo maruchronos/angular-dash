@@ -5,6 +5,7 @@ doughnut.controller("DoughnutCtrl",
     const ref = firebase.database().ref().child("frameworks");
     const frameworks = $firebaseArray(ref);
     frameworks.$watch(() => {
+      $scope.chartLoaded = true;
       $scope.data = frameworks.map(el => el.$value);
     });
     $scope.labels = ['Angular', 'Angular 2', 'No framework', 'React', 'Vue'];
@@ -13,6 +14,7 @@ doughnut.controller("DoughnutCtrl",
       legend: {
         display: true
       }
-    };    
+    };
+    $scope.chartLoaded = false;
   }
 );

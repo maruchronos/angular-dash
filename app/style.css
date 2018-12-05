@@ -24,3 +24,8 @@
 .md-button.active {
     background: #267ED5;    
 }
+
+.placeholder {
+    width: 50%;
+    opacity: 0.3;
+}
