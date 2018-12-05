@@ -11,11 +11,11 @@ angular.module("headerModule", []).component('appHeader', {
             <span flex></span>            
         </div>
     </md-toolbar>`
-}).controller('headerController', function($scope, $mdSidenav) {
-    $scope.toggleSidebar = buildToggler('left');    
-    function buildToggler(navID) {
-        return function() {
+}).controller('headerController', ($scope, $mdSidenav) =>  {
+    const buildToggler = (navID) => {
+        return () => {
             $mdSidenav(navID).toggle();
         }
-      }
+    }
+    $scope.toggleSidebar = buildToggler('left');
 });

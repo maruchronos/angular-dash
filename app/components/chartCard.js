@@ -31,10 +31,10 @@ angular.module("chartCardModule", ['chart.js', 'doughnut'])
                         <p>
                             This is a sample of a Donut chart inside an Agular 1.5, using Angular Material and angular-chart, 
                             a wrapper to Chart.js. Here I'm using firebase sync objects
-                            to track real-time changes.
+                            to track real-time changes. Original data from https://2017.stateofjs.com/2017/front-end/worldwide/
                         </p>
                     </md-card-content>
                 </md-card>
             </div>
         `,
-    }).controller('chartCardController', function ($scope) { });
+    }).controller('chartCardController', () => { });

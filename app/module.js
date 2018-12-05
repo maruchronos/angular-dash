@@ -8,13 +8,7 @@ const app = angular.module("app", [
     'ngRoute'
 ]);
 
-app.controller('appController', function ($scope, $firebaseObject) {
-    // const ref = firebase.database().ref();
-    // // download the data into a local object
-    // const syncData = $firebaseObject(ref);
-    // syncData.$bindTo($scope, "data");
-    // console.log($scope.data);
-});
+app.controller('appController', () => {});
 
 app.config(function config($routeProvider, $locationProvider) {
     $routeProvider.
@@ -32,6 +26,9 @@ app.config(function config($routeProvider, $locationProvider) {
             </bar-chart>`
         }).
         when('/list', {
+        template: '/pages/list.html'
+        }).
+        when('/chart', {
         template: '/pages/charts.html'
         }).
         otherwise('/');

@@ -3,7 +3,7 @@ const bars = angular.module("bars", ['chart.js']);
 
 // TODO - Read data from API 
 // Controller to manipulate data
-bars.controller("barsCtrl", function ($scope, $http) {
+bars.controller("barsCtrl", ($scope, $http) => {
     $scope.years = [];
     $scope.frameworks = [];
     $scope.stars = [];

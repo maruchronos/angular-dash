@@ -29,7 +29,7 @@ angular.module('sidebarModule', []).component('sidebar', {template: `
             </ul>
         </md-content>
     </md-sidenav>`})
-.controller('sidebarController', function($scope, $mdSidenav) {
+.controller('sidebarController', ($scope, $mdSidenav) => {
     $scope.menu = [
         {
             title: 'Charts',
@@ -43,16 +43,17 @@ angular.module('sidebarModule', []).component('sidebar', {template: `
         }
     ];
     $scope.selected = 'Charts';
-    $scope.toggleSidebar = buildToggler('left');    
-    function buildToggler(navID) {
+    const buildToggler = (navID) => {
         return function() {
             console.log('toggle sidebar');
             $mdSidenav(navID).toggle();
         }
     }
-    $scope.isSelected = (item) =>{
+    $scope.toggleSidebar = buildToggler('left');    
+    $scope.isSelected = (item) => {
         return $scope.selected === item;
     }
+    
     $scope.focusSection = (item) => {
         $scope.selected = item;
         $scope.toggleSidebar();
