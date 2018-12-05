@@ -32,14 +32,14 @@ angular.module('sidebarModule', []).component('sidebar', {template: `
 .controller('sidebarController', ($scope, $mdSidenav) => {
     $scope.menu = [
         {
-            title: 'Charts',
-            url: '/charts',
+            title: 'Donut',
+            url: '/#/donut',
             icon: 'app/img/icons/chart.svg'
         },
         {
-            title: 'Lists',
-            url: '/lists',
-            icon: 'app/img/icons/list.svg'
+            title: 'Bars',
+            url: '/#/bars',
+            icon: 'app/img/icons/bars.svg'
         }
     ];
     $scope.selected = 'Charts';
@@ -53,7 +53,7 @@ angular.module('sidebarModule', []).component('sidebar', {template: `
     $scope.isSelected = (item) => {
         return $scope.selected === item;
     }
-    
+
     $scope.focusSection = (item) => {
         $scope.selected = item;
         $scope.toggleSidebar();
