@@ -9,7 +9,6 @@ angular.module("headerModule", ['search']).component('appHeader', {
                 <span>Angular 1.5 - Dashboard</span>
             </h2>
             <span flex></span>
-            <search></search>         
         </div>
     </md-toolbar>`
 }).controller('headerController', ($scope, $mdSidenav) =>  {

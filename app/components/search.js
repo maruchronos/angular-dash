@@ -1,29 +1,32 @@
-const SEARCH = angular.module("search", []);
+const SEARCH = angular.module('search', []);
 
-SEARCH.controller("searchCtrl", ($scope) => {    
+SEARCH.controller('searchCtrl', ($scope) => {    
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
+  $scope.results = [];
   $scope.types = ['Pants', 'Denim', 'Sweaters'];
-  $scope.brands = ['Gap', 'Boss', 'Banana Republic'];
+  $scope.brands = ['Gap', 'Boss', 'Banana Republic', 'Hugo Boss'];
 
   replaceBrands = (brands) => {
     $scope.query = $scope.rawQuery;
     brands.map((brand) => { 
-      $scope.query = $scope.query.replace(brand, `<b>${brand}</b>`)
-      console.log('updating->'+brand, $scope.query);
+      $scope.query = $scope.query.replace(new RegExp(brand, 'ig'), `<b>${brand}</b>`)
     });
   };
 
   replaceTypes = (types) => {
     types.map((type) => { 
       $scope.query = $scope.query.replace(type, `<i>${type}</i>`)
-      console.log('updating->'+type, $scope.query);
     });
   };
 
-  $scope.updateQuery = () => {
+  updateQuery = () => {
     replaceBrands($scope.brands);
     replaceTypes($scope.types);
+  }
+
+  $scope.search = () => {
+    updateQuery();    
   }
 
 });
@@ -34,8 +37,15 @@ SEARCH.component('search', {
     <div ng-controller="searchCtrl" >
       <span>Search:</span>
       <input type="text" ng-model="rawQuery">
-      {{query}}
-      <md-button ng-click="updateQuery()">pesquisar</md-button>
+      <md-button md-no-ink class="md-primary" ng-click="search()">pesquisar</md-button>
+      <div ng-if="query !== ''" class="resultBox">
+        Showing results for: "<span ng-bind-html="query"></span>"
+        <ul>
+          <li ng-repeat="result in results">
+            <p>{{result}}</p>
+          </li>
+        </ul>
+      </div>
     </div>
   `,
 });

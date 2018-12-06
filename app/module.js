@@ -39,10 +39,7 @@ app.config(function config($stateProvider) {
   const STORE = {
     name: 'store',
     url: '/store',
-    template: `
-      <chart-card
-          title="Doughnut Chart">
-      </chart-card>`
+    template: `<search></search>`
   };
 
   const BARS = {

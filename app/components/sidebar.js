@@ -1,4 +1,4 @@
-angular.module('sidebarModule', []).component('sidebar', {template: `
+angular.module('sidebarModule', ['ngSanitize']).component('sidebar', {template: `
     <md-sidenav id="sidenav" class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
         <md-toolbar class="md-theme-indigo md-toolbar-tools" layout="row" ng-controller="sidebarController">
             <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidebar()">
@@ -32,6 +32,11 @@ angular.module('sidebarModule', []).component('sidebar', {template: `
 .controller('sidebarController', ($scope, $mdSidenav) => {
     $scope.menu = [
         {
+            title: 'Home',
+            url: '/#/',
+            icon: 'app/img/icons/home.svg'
+        },
+        {
             title: 'Donut',
             url: '/#/donut',
             icon: 'app/img/icons/chart.svg'
@@ -40,6 +45,11 @@ angular.module('sidebarModule', []).component('sidebar', {template: `
             title: 'Bars',
             url: '/#/bars',
             icon: 'app/img/icons/bars.svg'
+        },
+        {
+            title: 'Store',
+            url: '/#/store',
+            icon: 'app/img/icons/cloth.svg'
         }
     ];
     $scope.selected = 'Charts';
