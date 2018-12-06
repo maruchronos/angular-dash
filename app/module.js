@@ -35,6 +35,15 @@ app.config(function config($stateProvider) {
           title="Doughnut Chart">
       </chart-card>`
   };
+  
+  const STORE = {
+    name: 'store',
+    url: '/store',
+    template: `
+      <chart-card
+          title="Doughnut Chart">
+      </chart-card>`
+  };
 
   const BARS = {
     name: 'bars',
@@ -52,4 +61,5 @@ app.config(function config($stateProvider) {
   $stateProvider.state(HOME);
   $stateProvider.state(DONUT);
   $stateProvider.state(BARS);
+  $stateProvider.state(STORE);
 });

@@ -1,4 +1,4 @@
-angular.module("headerModule", []).component('appHeader', {
+angular.module("headerModule", ['search']).component('appHeader', {
     template: `
     <md-toolbar>
         <div class="md-toolbar-tools" ng-controller="headerController">
@@ -8,7 +8,8 @@ angular.module("headerModule", []).component('appHeader', {
             <h2>
                 <span>Angular 1.5 - Dashboard</span>
             </h2>
-            <span flex></span>            
+            <span flex></span>
+            <search></search>         
         </div>
     </md-toolbar>`
 }).controller('headerController', ($scope, $mdSidenav) =>  {
