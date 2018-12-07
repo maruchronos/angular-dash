@@ -1,6 +1,6 @@
 const SEARCH = angular.module('search', ['ngSanitize']);
 
-SEARCH.controller('searchCtrl', ($scope, $http) => {    
+SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {    
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
   $scope.results = [];
@@ -71,6 +71,13 @@ SEARCH.controller('searchCtrl', ($scope, $http) => {
   }
   
   $scope.search = () => {
+    if ($scope.rawQuery === '') {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Nothing to search!')            
+          .hideDelay(2000)
+      );
+    }
     $scope.results = '';
     $scope.loading = true;
     updateQuery();
@@ -82,21 +89,29 @@ SEARCH.controller('searchCtrl', ($scope, $http) => {
 // Create component as a new Dom
 SEARCH.component('search', {     
   template: `
-    <div ng-controller="searchCtrl" >
-      <span>Search:</span>
-      <input type="text" ng-model="rawQuery">
-      <md-button md-no-ink class="md-primary" ng-click="search()">pesquisar</md-button>
+    <md-content ng-controller="searchCtrl" flex>
+      <div layout="row" layout-align="center center">
+        <md-input-container md-no-float class="md-block">
+          <md-icon md-svg-src="app/img/icons/search.svg"></md-icon>
+          <input ng-model="rawQuery" type="text" placeholder="Search">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="search()">pesquisar</md-button>
+      </div>
       <div ng-if="query !== ''" class="resultBox">
         Showing results for: "<span ng-bind-html="query"></span>"
         <div ng-if="loading" layout="row" layout-sm="column" layout-align="space-around">
           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
         </div>
-        <ul>
-          <li ng-repeat="result in results">
-            <p>{{result.name}}</p>
-          </li>
-        </ul>
+        <md-list>
+          <md-list-item class="md-3-line" ng-repeat="result in results">
+            <div class="md-list-item-text">
+              <h3>{{result.name}}</h3>
+              <h4><b>{{result.brand}}</b></h4>
+            </div>            
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
       </div>
-    </div>
+    </md-content>
   `,
 });
