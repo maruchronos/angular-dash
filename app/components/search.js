@@ -4,51 +4,29 @@ SEARCH.controller('searchCtrl', ($scope, $http) => {
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
   $scope.results = [];
+  $scope.loading = false;
   $scope.types = ['Pants', 'Denim', 'Sweaters'];
   $scope.brands = ['Gap', 'Banana Republic', 'Hugo Boss', 'Boss'];
-
-  replaceBrand = (brand) => {
-    $scope.query = $scope.rawQuery;
-
-    if (brand === '') return;
-    // Make best fit brand bold
-    $scope.query = $scope.query.replace(new RegExp(brand, 'ig'), `<b>${brand}</b>`);
-    // console.log(`update brand: ${$scope.query}`);
-  };
-
-  replaceTypes = (type) => {
+  
+  formatQuery = (type, format) => {
     if (type === '') return;
-    // Make best fit type italic
-    $scope.query = $scope.query.replace(new RegExp(type, 'ig'), `<i>${type}</i>`);
-    // console.log(`update type: ${$scope.query}`);
+    // Make best fit italic or bold
+    $scope.query = $scope.query.replace(
+      new RegExp(type, 'ig'), 
+      `<${format}>${type}</${format}>`
+    );
   };
 
-  bestFitBrand = (brands) => {    
+  findBestFit = (list) => {    
     let bestFit = '';
-    brands.map((brand) => {
-      const regex = new RegExp(brand, 'ig');
+    list.map((element) => {
+      const regex = new RegExp(element, 'ig');
       
-      // Check if user query has current brand
+      // Check if user query has current element
       if (regex.test($scope.rawQuery)){
         // Update bestfit using string length
-        if (brand.length > bestFit.length){
-          bestFit = brand;
-        }
-      }
-    });
-    return bestFit;
-  }
-
-  bestFitType = (types) => {    
-    let bestFit = '';
-    types.map((type) => {
-      const regex = new RegExp(type, 'ig');
-      
-      // Check if user query has current type
-      if (regex.test($scope.rawQuery)){
-        // Update bestfit using string length
-        if (type.length > bestFit.length){
-          bestFit = type;
+        if (element.length > bestFit.length){
+          bestFit = element;
         }
       }
     });
@@ -56,20 +34,39 @@ SEARCH.controller('searchCtrl', ($scope, $http) => {
   }
 
   updateQuery = () => {
-    replaceBrand(bestFitBrand($scope.brands));
-    replaceTypes(bestFitType($scope.types));
+    $scope.query = $scope.rawQuery;
+    
+    // Add bold style to brand
+    formatQuery(findBestFit($scope.brands), 'b');
+    
+    // Add italic style to type
+    formatQuery(findBestFit($scope.types), 'i');
   }
 
-  $scope.search = () => {
-    updateQuery();
-    $http.get('https://angulardash-b52ea.firebaseio.com/stars.json')
+  fetchResults = () => {
+    $http.get('https://angulardash-b52ea.firebaseio.com/cloths.json')
       .then(result => {
         if(result.status === 200){
           const { data } = result;
           $scope.results = data;
+          $scope.loading = false;
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Something went wrong!')            
+            .hideDelay(2000)
+        );
+        console.log(err);
+      });
+  }
+  
+  $scope.search = () => {
+    $scope.results = '';
+    $scope.loading = true;
+    updateQuery();
+    fetchResults();
   }
 
 });
@@ -83,9 +80,12 @@ SEARCH.component('search', {
       <md-button md-no-ink class="md-primary" ng-click="search()">pesquisar</md-button>
       <div ng-if="query !== ''" class="resultBox">
         Showing results for: "<span ng-bind-html="query"></span>"
+        <div ng-if="loading" layout="row" layout-sm="column" layout-align="space-around">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
         <ul>
           <li ng-repeat="result in results">
-            <p>{{result}}</p>
+            <p>{{result.name}}</p>
           </li>
         </ul>
       </div>
