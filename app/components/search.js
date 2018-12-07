@@ -1,34 +1,75 @@
 const SEARCH = angular.module('search', ['ngSanitize']);
 
-SEARCH.controller('searchCtrl', ($scope) => {    
+SEARCH.controller('searchCtrl', ($scope, $http) => {    
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
   $scope.results = [];
   $scope.types = ['Pants', 'Denim', 'Sweaters'];
-  $scope.brands = ['Gap', 'Boss', 'Banana Republic', 'Hugo Boss'];
+  $scope.brands = ['Gap', 'Banana Republic', 'Hugo Boss', 'Boss'];
 
-  replaceBrands = (brands) => {
+  replaceBrand = (brand) => {
     $scope.query = $scope.rawQuery;
-    brands.map((brand) => { 
-      $scope.query = $scope.query.replace(new RegExp(brand, 'ig'), `<b>${brand}</b>`);
-      console.log(`update brand: ${$scope.query}`);
-    });
+
+    if (brand === '') return;
+    // Make best fit brand bold
+    $scope.query = $scope.query.replace(new RegExp(brand, 'ig'), `<b>${brand}</b>`);
+    // console.log(`update brand: ${$scope.query}`);
   };
 
-  replaceTypes = (types) => {
-    types.map((type) => { 
-      $scope.query = $scope.query.replace(new RegExp(type, 'ig'), `<i>${type}</i>`);
-      console.log(`update type: ${$scope.query}`);
-    });
+  replaceTypes = (type) => {
+    if (type === '') return;
+    // Make best fit type italic
+    $scope.query = $scope.query.replace(new RegExp(type, 'ig'), `<i>${type}</i>`);
+    // console.log(`update type: ${$scope.query}`);
   };
+
+  bestFitBrand = (brands) => {    
+    let bestFit = '';
+    brands.map((brand) => {
+      const regex = new RegExp(brand, 'ig');
+      
+      // Check if user query has current brand
+      if (regex.test($scope.rawQuery)){
+        // Update bestfit using string length
+        if (brand.length > bestFit.length){
+          bestFit = brand;
+        }
+      }
+    });
+    return bestFit;
+  }
+
+  bestFitType = (types) => {    
+    let bestFit = '';
+    types.map((type) => {
+      const regex = new RegExp(type, 'ig');
+      
+      // Check if user query has current type
+      if (regex.test($scope.rawQuery)){
+        // Update bestfit using string length
+        if (type.length > bestFit.length){
+          bestFit = type;
+        }
+      }
+    });
+    return bestFit;
+  }
 
   updateQuery = () => {
-    replaceBrands($scope.brands);
-    replaceTypes($scope.types);
+    replaceBrand(bestFitBrand($scope.brands));
+    replaceTypes(bestFitType($scope.types));
   }
 
   $scope.search = () => {
-    updateQuery();    
+    updateQuery();
+    $http.get('https://angulardash-b52ea.firebaseio.com/stars.json')
+      .then(result => {
+        if(result.status === 200){
+          const { data } = result;
+          $scope.results = data;
+        }
+      })
+      .catch(err => console.log(err));
   }
 
 });
