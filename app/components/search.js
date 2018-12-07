@@ -4,9 +4,23 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
   $scope.results = [];
-  $scope.loading = false;
-  $scope.types = ['Pants', 'Denim', 'Sweaters', 'Skirts', 'Dresses'];
-  $scope.brands = ['Gap', 'Banana Republic', 'Hugo Boss', 'Boss', 'Taylor', 'Rebeca Taylor'];
+  $scope.loading = true;
+  $scope.types = [];
+  $scope.brands = [];
+
+  initialize = () => {
+    Promise.all([
+      $http.get('https://angulardash-b52ea.firebaseio.com/types.json'),
+      $http.get('https://angulardash-b52ea.firebaseio.com/brands.json')
+    ]).then(value => {
+      const TYPES = Object.values(value[0].data);
+      $scope.types = TYPES.map(item => item.name);
+
+      const BRANDS = Object.values(value[1].data);
+      $scope.brands = BRANDS.map(item => item.name);
+      $scope.loading = false;
+    });
+  }
 
   formatQuery = (type, format, target) => {
     if (type === '') return;
@@ -83,7 +97,7 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
     updateQuery();
     fetchResults();
   }
-
+  initialize();
 });
 
 // Create component as a new Dom
