@@ -1,31 +1,31 @@
 const SEARCH = angular.module('search', ['ngSanitize']);
 
-SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {    
+SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
   $scope.results = [];
   $scope.loading = false;
   $scope.types = ['Pants', 'Denim', 'Sweaters', 'Skirts', 'Dresses'];
   $scope.brands = ['Gap', 'Banana Republic', 'Hugo Boss', 'Boss', 'Taylor', 'Rebeca Taylor'];
-  
-  formatQuery = (type, format) => {
+
+  formatQuery = (type, format, target) => {
     if (type === '') return;
     // Make best fit italic or bold
-    $scope.query = $scope.query.replace(
-      new RegExp(type, 'ig'), 
+    return target.replace(
+      new RegExp(type, 'ig'),
       `<${format}>${type}</${format}>`
     );
   };
 
-  findBestFit = (list) => {    
+  findBestFit = (list) => {
     let bestFit = '';
     list.map((element) => {
       const regex = new RegExp(element, 'ig');
-      
+
       // Check if user query has current element
-      if (regex.test($scope.rawQuery)){
+      if (regex.test($scope.rawQuery)) {
         // Update bestfit using string length
-        if (element.length > bestFit.length){
+        if (element.length > bestFit.length) {
           bestFit = element;
         }
       }
@@ -35,26 +35,26 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
 
   updateQuery = () => {
     $scope.query = $scope.rawQuery;
-    
+
     // Add bold style to brand
-    formatQuery(findBestFit($scope.brands), 'b');
-    
+    $scope.query = formatQuery(findBestFit($scope.brands), 'b', $scope.query);
+
     // Add italic style to type
-    formatQuery(findBestFit($scope.types), 'i');
+    $scope.query = formatQuery(findBestFit($scope.types), 'i', $scope.query);
   }
 
   fetchResults = () => {
     $http.get('https://angulardash-b52ea.firebaseio.com/clothing.json')
       .then(result => {
-        if(result.status === 200){
+        if (result.status === 200) {
           const { data } = result;
 
           const options = {
             keys: ['name']
           };
-          
+
           const keys = Object.values(data);
-          fuse = new Fuse(keys, options);          
+          fuse = new Fuse(keys, options);
           $scope.results = fuse.search($scope.rawQuery);
           console.log($scope.results);
           $scope.loading = false;
@@ -63,18 +63,18 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
       .catch(err => {
         $mdToast.show(
           $mdToast.simple()
-            .textContent('Something went wrong!')            
+            .textContent('Something went wrong!')
             .hideDelay(2000)
         );
         console.log(err);
       });
   }
-  
+
   $scope.search = () => {
     if ($scope.rawQuery === '') {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Nothing to search!')            
+          .textContent('Nothing to search!')
           .hideDelay(2000)
       );
     }
@@ -87,7 +87,7 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
 });
 
 // Create component as a new Dom
-SEARCH.component('search', {     
+SEARCH.component('search', {
   template: `
     <md-content ng-controller="searchCtrl" flex>
       <div layout="row" layout-align="center center">
