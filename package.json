@@ -9,6 +9,7 @@
     "angular-route": "1.5.11",
     "angular-sanitize": "1.5.11",
     "angular-ui-router": "^1.0.20",
-    "chart.js": "^2.7.3"
+    "chart.js": "^2.7.3",
+    "fuse.js": "^3.3.0"
   }
 }

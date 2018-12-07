@@ -5,8 +5,8 @@ SEARCH.controller('searchCtrl', ($scope, $http) => {
   $scope.query = '';
   $scope.results = [];
   $scope.loading = false;
-  $scope.types = ['Pants', 'Denim', 'Sweaters'];
-  $scope.brands = ['Gap', 'Banana Republic', 'Hugo Boss', 'Boss'];
+  $scope.types = ['Pants', 'Denim', 'Sweaters', 'Skirts', 'Dresses'];
+  $scope.brands = ['Gap', 'Banana Republic', 'Hugo Boss', 'Boss', 'Taylor', 'Rebeca Taylor'];
   
   formatQuery = (type, format) => {
     if (type === '') return;
@@ -44,11 +44,19 @@ SEARCH.controller('searchCtrl', ($scope, $http) => {
   }
 
   fetchResults = () => {
-    $http.get('https://angulardash-b52ea.firebaseio.com/cloths.json')
+    $http.get('https://angulardash-b52ea.firebaseio.com/clothing.json')
       .then(result => {
         if(result.status === 200){
           const { data } = result;
-          $scope.results = data;
+
+          const options = {
+            keys: ['name']
+          };
+          
+          const keys = Object.values(data);
+          fuse = new Fuse(keys, options);          
+          $scope.results = fuse.search($scope.rawQuery);
+          console.log($scope.results);
           $scope.loading = false;
         }
       })
