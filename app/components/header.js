@@ -1,4 +1,4 @@
-angular.module("headerModule", ['search']).component('appHeader', {
+angular.module("headerModule", []).component('appHeader', {
     template: `
     <md-toolbar>
         <div class="md-toolbar-tools" ng-controller="headerController">

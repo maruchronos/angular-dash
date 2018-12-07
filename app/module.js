@@ -5,7 +5,8 @@ const app = angular.module("app", [
   'sidebarModule',
   'chartCardModule',
   'bars',
-  'ui.router'
+  'ui.router',
+  'search'
 ]);
 
 app.controller('appController', () => {});

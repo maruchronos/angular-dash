@@ -1,4 +1,4 @@
-angular.module('sidebarModule', ['ngSanitize']).component('sidebar', {template: `
+angular.module('sidebarModule', []).component('sidebar', {template: `
     <md-sidenav id="sidenav" class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
         <md-toolbar class="md-theme-indigo md-toolbar-tools" layout="row" ng-controller="sidebarController">
             <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidebar()">
@@ -49,13 +49,12 @@ angular.module('sidebarModule', ['ngSanitize']).component('sidebar', {template: 
         {
             title: 'Store',
             url: '/#/store',
-            icon: 'app/img/icons/cloth.svg'
+            icon: 'app/img/icons/store.svg'
         }
     ];
     $scope.selected = 'Charts';
     const buildToggler = (navID) => {
         return function() {
-            console.log('toggle sidebar');
             $mdSidenav(navID).toggle();
         }
     }

@@ -1,4 +1,4 @@
-const SEARCH = angular.module('search', []);
+const SEARCH = angular.module('search', ['ngSanitize']);
 
 SEARCH.controller('searchCtrl', ($scope) => {    
   $scope.rawQuery = 'Gap Floral Pants';
@@ -10,13 +10,15 @@ SEARCH.controller('searchCtrl', ($scope) => {
   replaceBrands = (brands) => {
     $scope.query = $scope.rawQuery;
     brands.map((brand) => { 
-      $scope.query = $scope.query.replace(new RegExp(brand, 'ig'), `<b>${brand}</b>`)
+      $scope.query = $scope.query.replace(new RegExp(brand, 'ig'), `<b>${brand}</b>`);
+      console.log(`update brand: ${$scope.query}`);
     });
   };
 
   replaceTypes = (types) => {
     types.map((type) => { 
-      $scope.query = $scope.query.replace(type, `<i>${type}</i>`)
+      $scope.query = $scope.query.replace(new RegExp(type, 'ig'), `<i>${type}</i>`);
+      console.log(`update type: ${$scope.query}`);
     });
   };
 
