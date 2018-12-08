@@ -47,14 +47,15 @@ search.controller('searchCtrl', ($scope, $http) => {
     return bestFit;
   }
 
-  updateQuery = () => {
-    $scope.query = $scope.rawQuery;
+  $scope.updateQuery = (target) => {
 
     // Add bold style to brand
-    $scope.query = formatQuery(findBestFit($scope.brands), 'b', $scope.query);
+    target = formatQuery(findBestFit($scope.brands), 'b', target);
 
     // Add italic style to type
-    $scope.query = formatQuery(findBestFit($scope.types), 'i', $scope.query);
+    target = formatQuery(findBestFit($scope.types), 'i', target);
+
+    return target;
   }
 
   fetchResults = () => {
@@ -86,7 +87,8 @@ search.controller('searchCtrl', ($scope, $http) => {
     }
     $scope.results = '';
     $scope.loading = true;
-    updateQuery();
+    $scope.query = $scope.rawQuery;
+    $scope.query = $scope.updateQuery($scope.query);
     fetchResults();
   }
   initialize();
@@ -116,9 +118,7 @@ search.component('search', {
         </div>
         <ul class="list-group result-list">
           <li class="list-group-item" ng-repeat="result in results">
-            <div class="li-text">
-              {{result.name}}
-            </div>            
+            <div class="li-text" ng-bind-html="updateQuery(result.name)"></div>            
             <md-divider ng-if="!$last"></md-divider>
           </li>
         </ul>
