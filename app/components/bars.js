@@ -3,47 +3,47 @@ const bars = angular.module("bars", ['chart.js']);
 
 // TODO - Read data from API 
 // Controller to manipulate data
-bars.controller("barsCtrl", ($scope, $http) => {
-    $scope.years = [];
-    $scope.frameworks = [];
-    $scope.stars = [];
-    $scope.colors = ['#ff6384', '#36a2ff', '#4bffc0'];
-    $scope.options = {
-        legend: {
-          display: true
-        }
-    };
+bars.controller('barsCtrl', ($scope, $http) => {
+  $scope.years = [];
+  $scope.frameworks = [];
+  $scope.stars = [];
+  $scope.colors = ['#ff6384', '#36a2ff', '#4bffc0'];
+  $scope.options = {
+    legend: {
+      display: true
+    }
+  };
 
-    $scope.chartLoaded = false;
+  $scope.chartLoaded = false;
 
-    //Get data from frebase API
-    $http.get("https://angulardash-b52ea.firebaseio.com/stars.json")
-        .then(result => {
-            if(result.status === 200){
-                const { data } = result;
-                const arrayResult = Object.values(data);
+  //Get data from frebase API
+  $http.get('https://angulardash-b52ea.firebaseio.com/stars.json')
+    .then(result => {
+      if (result.status === 200) {
+        const { data } = result;
+        const arrayResult = Object.values(data);
 
-                // Stars must be defined as [
-                    // [fw1(y1), fw1(y2), ..., fw1(yN)]]
-                    // ...
-                    // [ fwN(y1), fw1(y2), ..., fw1(yN)]]
-                // ];
-                
-                
-                // Define Frameworks
-                $scope.frameworks = Object.keys(data);
-                
-                // Define Years
-                $scope.years = Object.keys(arrayResult[0]);
+        // Stars must be defined as [
+          // [fw1(y1), fw1(y2), ..., fw1(yN)]]
+          // ...
+          // [ fwN(y1), fw1(y2), ..., fw1(yN)]]
+        // ];
+        
+        
+        // Define Frameworks
+        $scope.frameworks = Object.keys(data);
+        
+        // Define Years
+        $scope.years = Object.keys(arrayResult[0]);
 
-                // Define Stars
-                $scope.stars = arrayResult.map(star => Object.values(star));
+        // Define Stars
+        $scope.stars = arrayResult.map(star => Object.values(star));
 
-                $scope.chartLoaded = true;
+        $scope.chartLoaded = true;
 
-            }
-        })
-        .catch(err => console.log(err));
+      }
+    })
+    .catch(err => console.log(err));
   }
 );
 
