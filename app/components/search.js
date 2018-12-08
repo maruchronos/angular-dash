@@ -31,13 +31,13 @@ search.controller('searchCtrl', ($scope, $http) => {
     );
   };
 
-  findBestFit = (list) => {
+  findBestFit = (list, target) => {
     let bestFit = '';
     list.map((element) => {
       const regex = new RegExp(element, 'ig');
 
       // Check if user query has current element
-      if (regex.test($scope.rawQuery)) {
+      if (regex.test(target)) {
         // Update bestfit using string length
         if (element.length > bestFit.length) {
           bestFit = element;
@@ -48,22 +48,26 @@ search.controller('searchCtrl', ($scope, $http) => {
   }
 
   $scope.updateQuery = (target) => {
-
     // Add bold style to brand
-    target = formatQuery(findBestFit($scope.brands), 'b', target);
+    target = formatQuery(findBestFit($scope.brands, target), 'b', target);
 
     // Add italic style to type
-    target = formatQuery(findBestFit($scope.types), 'i', target);
+    target = formatQuery(findBestFit($scope.types, target), 'i', target);    
 
     return target;
   }
 
   fetchResults = () => {
+    // Fetch all data from DB. Firebase doesn't support %LIKE% queries
+    // And it's not great for searching.
+    // In the future I can use Cloud Functions and Other tools like
+    // Algolia to make the search online
     $http.get('https://angulardash-b52ea.firebaseio.com/clothing.json')
       .then(result => {
         if (result.status === 200) {
           const { data } = result;
 
+          // Fuzzy search data using query
           const options = {
             keys: ['name']
           };
@@ -71,12 +75,15 @@ search.controller('searchCtrl', ($scope, $http) => {
           const keys = Object.values(data);
           fuse = new Fuse(keys, options);
           $scope.results = fuse.search($scope.rawQuery);
-          // console.log($scope.results);
+
+          // Format result with bold and italic
+          $scope.results = $scope.results.map(item => $scope.updateQuery(item.name));
+          
           $scope.loading = false;
         }
       })
       .catch(err => {
-        alertt('Something went wrong!');
+        alert('Something went wrong!');
         console.log(err);
       });
   }
@@ -118,7 +125,7 @@ search.component('search', {
         </div>
         <ul class="list-group result-list">
           <li class="list-group-item" ng-repeat="result in results">
-            <div class="li-text" ng-bind-html="updateQuery(result.name)"></div>            
+            <div class="li-text" ng-bind-html="result"></div>            
             <md-divider ng-if="!$last"></md-divider>
           </li>
         </ul>
