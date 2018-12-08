@@ -3,89 +3,87 @@ const bars = angular.module("bars", ['chart.js']);
 
 // TODO - Read data from API 
 // Controller to manipulate data
-bars.controller("barsCtrl", ($scope, $http) => {
-    $scope.years = [];
-    $scope.frameworks = [];
-    $scope.stars = [];
-    $scope.colors = ['#ff6384', '#36a2ff', '#4bffc0'];
-    $scope.options = {
-        legend: {
-          display: true
-        }
-    };
+bars.controller('barsCtrl', ($scope, $http) => {
+  $scope.years = [];
+  $scope.frameworks = [];
+  $scope.stars = [];
+  $scope.colors = ['#ff6384', '#36a2ff', '#4bffc0'];
+  $scope.options = {
+    legend: {
+      display: true
+    }
+  };
 
-    $scope.chartLoaded = false;
+  $scope.chartLoaded = false;
 
-    //Get data from frebase API
-    $http.get("https://angulardash-b52ea.firebaseio.com/stars.json")
-        .then(result => {
-            if(result.status === 200){
-                const { data } = result;
-                const arrayResult = Object.values(data);
+  //Get data from frebase API
+  $http.get('https://angulardash-b52ea.firebaseio.com/stars.json')
+    .then(result => {
+      if (result.status === 200) {
+        const { data } = result;
+        const arrayResult = Object.values(data);
 
-                // Stars must be defined as [
-                    // [fw1(y1), fw1(y2), ..., fw1(yN)]]
-                    // ...
-                    // [ fwN(y1), fw1(y2), ..., fw1(yN)]]
-                // ];
-                
-                
-                // Define Frameworks
-                $scope.frameworks = Object.keys(data);
-                
-                // Define Years
-                $scope.years = Object.keys(arrayResult[0]);
+        // Stars must be defined as [
+          // [fw1(y1), fw1(y2), ..., fw1(yN)]]
+          // ...
+          // [ fwN(y1), fw1(y2), ..., fw1(yN)]]
+        // ];
+        
+        
+        // Define Frameworks
+        $scope.frameworks = Object.keys(data);
+        
+        // Define Years
+        $scope.years = Object.keys(arrayResult[0]);
 
-                // Define Stars
-                $scope.stars = arrayResult.map(star => Object.values(star));
+        // Define Stars
+        $scope.stars = arrayResult.map(star => Object.values(star));
 
-                $scope.chartLoaded = true;
+        $scope.chartLoaded = true;
 
-            }
-        })
-        .catch(err => console.log(err));
+      }
+    })
+    .catch(err => console.log(err));
   }
 );
 
 // Create component as a new Dom
 bars.component('barChart', {
-    // isolated scope binding
-    bindings: {
-        title: '@',
-        description: '@',
-        type: '@'
-    },
+  // isolated scope binding
+  bindings: {
+    title: '@',
+    description: '@',
+    type: '@'
+  },
 
-    // Inline template binded to barsController
-    template: `
-        <div flex layout="column">
-            <md-card ng-controller="barsCtrl">
-                <md-toolbar md-scroll-shrink>
-                    <div class="md-toolbar-tools">Github Stars by Framework</div>
-                </md-toolbar>
-                <div layout="row" layout-align="center center" ng-if="!chartLoaded">
-                    <img class="placeholder" src="app/img/bars-placeholder.png" />
-                </div>
-                <div ng-if="chartLoaded">
-                <canvas 
-                    id="bar" 
-                    class="chart chart-bar" 
-                    chart-data="stars"
-                    chart-series="frameworks"
-                    chart-options="options"
-                    chart-labels="years"
-                    chart-colors="colors"
-                    chart-click="onClick"> </canvas> 
-                </div>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{$ctrl.title}}</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content>
-                    <p>{{$ctrl.description}}</p>
-                </md-card-content>                
-            </md-card>
+  // Inline template binded to barsController
+  template: `
+    <div class="card card-primary" ng-controller="barsCtrl">
+      <div class="card-header">
+        <div class="header-block">
+          <p class="title">
+            Github Stars by Framework
+          </p>
         </div>
-    `,
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-center" ng-if="!chartLoaded">
+          <img class="placeholder" src="app/img/bars-placeholder.png" />
+        </div>
+        <div ng-if="chartLoaded">
+          <canvas 
+            id="bar" 
+            class="chart chart-bar" 
+            chart-data="stars"
+            chart-series="frameworks"
+            chart-options="options"
+            chart-labels="years"
+            chart-colors="colors"
+            chart-click="onClick"> 
+          </canvas> 
+          <p class="card-text">{{$ctrl.description}}</p>
+        </div>
+      </div>
+    </div>
+  `,
 });

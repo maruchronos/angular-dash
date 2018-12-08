@@ -1,8 +1,8 @@
-const doughnut = angular.module("doughnut", []);
+const doughnut = angular.module('doughnut', []);
 
-doughnut.controller("DoughnutCtrl", 
+doughnut.controller('DoughnutCtrl', 
   ($scope, $firebaseArray) => {
-    const ref = firebase.database().ref().child("frameworks");
+    const ref = firebase.database().ref().child('frameworks');
     const frameworks = $firebaseArray(ref);
     frameworks.$watch(() => {
       $scope.chartLoaded = true;

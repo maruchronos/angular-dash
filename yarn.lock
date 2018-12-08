@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@uirouter/core@5.0.21":
+  version "5.0.21"
+  resolved "https://registry.yarnpkg.com/@uirouter/core/-/core-5.0.21.tgz#b6c4c311e9416a1e8ce76b072e042a60224d1b3a"
+  integrity sha512-QWHc0wT00qtYNkT0BXZaFNLLHZyux0qJjF8c2WklW5/Q0Z866NoJjJErEMWjQb/AR+olkR2NlfEEi8KTQU2OpA==
+
 angular-animate@1.5.11:
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/angular-animate/-/angular-animate-1.5.11.tgz#1baa43c303d1b93c4e6aa89453b39114b7a1c669"
@@ -34,6 +39,18 @@ angular-route@1.5.11:
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/angular-route/-/angular-route-1.5.11.tgz#49614f3a167f54291e449fe8ba05d39c58924b83"
   integrity sha1-SWFPOhZ/VCkeRJ/ougXTnFiSS4M=
+
+angular-sanitize@1.5.11:
+  version "1.5.11"
+  resolved "https://registry.yarnpkg.com/angular-sanitize/-/angular-sanitize-1.5.11.tgz#ebfb3f343e543f9b2ef050fb4c2e9ee048d1772f"
+  integrity sha1-6/s/ND5UP5su8FD7TC6e4EjRdy8=
+
+angular-ui-router@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/angular-ui-router/-/angular-ui-router-1.0.20.tgz#86dbaaa3368df0c319f3328f4ace616a246cf394"
+  integrity sha512-D9Y+qOq6StinrlyeiHp7wbOBL5UbwaHW1dgpfQZ6fWuQ5Q5UOrJfe3S28XWDt8ybOKaUh2ds/IFXib5vCu8Opg==
+  dependencies:
+    "@uirouter/core" "5.0.21"
 
 angular@1.5.11:
   version "1.5.11"
@@ -85,6 +102,11 @@ color-name@^1.0.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+fuse.js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.3.0.tgz#1e4fe172a60687230fb54a5cb247eb96e2e7e885"
+  integrity sha512-ESBRkGLWMuVkapqYCcNO1uqMg5qbCKkgb+VS6wsy17Rix0/cMS9kSOZoYkjH8Ko//pgJ/EEGu0GTjk2mjX2LGQ==
 
 moment@^2.10.2, moment@^2.10.6:
   version "2.22.2"
