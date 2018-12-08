@@ -17,8 +17,8 @@ angular.module('sidebarModule', [])
                 ng-repeat="item in menu"> 
                 <a ng-click="focusSection(item.url)"
                   href="{{item.url}}">    
-                  <span class="ng-binding ng-scope">                    
-                    <img class="menu-icon" src="{{item.icon}}"/>
+                  <span class="ng-binding ng-scope">
+                    <i class="{{item.icon}}"></i>
                     {{ item.title }}
                   </span>
                 </a>                    
@@ -26,37 +26,43 @@ angular.module('sidebarModule', [])
             </ul>
           </nav>
         </div>
-    </aside>`})
-.controller('sidebarController', ($scope, $location) => {
+      </aside>
+    `
+  })
+  .controller('sidebarController', ($scope, $location) => {
     $scope.menu = [
-        {
-            title: 'Home',
-            url: '/#/',
-            icon: 'app/img/icons/home.svg'
-        },
-        {
-            title: 'Donut',
-            url: '/#/donut',
-            icon: 'app/img/icons/chart.svg'
-        },
-        {
-            title: 'Bars',
-            url: '/#/bars',
-            icon: 'app/img/icons/bars.svg'
-        },
-        {
-            title: 'Store',
-            url: '/#/store',
-            icon: 'app/img/icons/store.svg'
-        }
+      {
+        title: 'Home',
+        url: '/#/',
+        icon: 'fa fa-home'
+      },
+      {
+        title: 'Donut',
+        url: '/#/donut',
+        icon: 'fa fa-chart-pie'
+      },
+      {
+        title: 'Bars',
+        url: '/#/bars',
+        icon: 'fa fa-bars'
+      },
+      {
+        title: 'Store',
+        url: '/#/store',
+        icon: 'fa fa-store'
+      }
     ];
+
+    // TODO: Use regex to get only the path on url location
+    // this implementation will probably break when user
+    // navigate to some inner path such as /store/brands
     $scope.selected = `/#${$location.url()}`;    
-    
+      
     $scope.isSelected = (item) => {
-        return $scope.selected === item;
+      return $scope.selected === item;
     }
 
     $scope.focusSection = (item) => {
-        $scope.selected = item;
+      $scope.selected = item;
     }
-});
+  });
