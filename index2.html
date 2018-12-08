@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <!-- <base href="/"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link rel="stylesheet" href="app/style.css">
+
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="node_modules/angular-messages/angular-messages.min.js"></script>    
+    
+    <!-- UI ROUTER -->
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    
+    <!-- Fuse JS -->
+    <script src="node_modules/fuse.js/dist/fuse.min.js"></script>
+
+    <!-- Charts -->
+    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="node_modules/angular-material/angular-material.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-database.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>    
+
+    <!-- Local Files -->
+    <script src="app/components/header.js"></script>
+    <script src="app/components/search.js"></script>
+    <script src="app/components/sidebar.js"></script>
+    <script src="app/components/bars.js"></script>
+    <script src="app/components/doughnut.js"></script>
+    <script src="app/components/chartCard.js"></script>
+    <script src="app/module.js"></script>
+
+    <title>Angular APP</title>
+</head>
+
+<body>
+    <app-header></app-header>
+    <div layout="row" class="layout-row">
+        <sidebar></sidebar>
+        <div ng-cloak ng-controller="appController">
+            <md-content>
+                <md-content flex layout-padding>
+                    <ui-view>
+                    </ui-view>
+                </md-content>
+            </md-content>
+        </div>
+    </div>
+</body>
+<script>
+    // Initialize the Firebase SDK
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAWy64ke2jSurJxCLVL9SEozEyd5mvWM9U",
+        authDomain: "angulardash-b52ea.firebaseapp.com",
+        databaseURL: "https://angulardash-b52ea.firebaseio.com",
+        projectId: "angulardash-b52ea",
+        storageBucket: "angulardash-b52ea.appspot.com",
+        messagingSenderId: "56954959832"
+    };
+  
+    firebase.initializeApp(config);
+</script>
+</html>

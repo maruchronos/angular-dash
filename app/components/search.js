@@ -1,6 +1,6 @@
-const SEARCH = angular.module('search', ['ngSanitize']);
+const search = angular.module('search', ['ngSanitize']);
 
-SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
+search.controller('searchCtrl', ($scope, $http) => {
   $scope.rawQuery = 'Gap Floral Pants';
   $scope.query = '';
   $scope.results = [];
@@ -13,17 +13,17 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
       $http.get('https://angulardash-b52ea.firebaseio.com/types.json'),
       $http.get('https://angulardash-b52ea.firebaseio.com/brands.json')
     ]).then(value => {
-      const TYPES = Object.values(value[0].data);
-      $scope.types = TYPES.map(item => item.name);
+      const types = Object.values(value[0].data);
+      $scope.types = types.map(item => item.name);
 
-      const BRANDS = Object.values(value[1].data);
-      $scope.brands = BRANDS.map(item => item.name);
+      const brands = Object.values(value[1].data);
+      $scope.brands = brands.map(item => item.name);
       $scope.loading = false;
     });
   }
 
   formatQuery = (type, format, target) => {
-    if (type === '') return;
+    if (type === '') return target;
     // Make best fit italic or bold
     return target.replace(
       new RegExp(type, 'ig'),
@@ -70,27 +70,19 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
           const keys = Object.values(data);
           fuse = new Fuse(keys, options);
           $scope.results = fuse.search($scope.rawQuery);
-          console.log($scope.results);
+          // console.log($scope.results);
           $scope.loading = false;
         }
       })
       .catch(err => {
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Something went wrong!')
-            .hideDelay(2000)
-        );
+        alertt('Something went wrong!');
         console.log(err);
       });
   }
 
   $scope.search = () => {
     if ($scope.rawQuery === '') {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Nothing to search!')
-          .hideDelay(2000)
-      );
+      alert('Nothing to search!');
     }
     $scope.results = '';
     $scope.loading = true;
@@ -101,31 +93,36 @@ SEARCH.controller('searchCtrl', ($scope, $http, $mdToast) => {
 });
 
 // Create component as a new Dom
-SEARCH.component('search', {
+search.component('search', {
   template: `
-    <md-content ng-controller="searchCtrl" flex>
-      <div layout="row" layout-align="center center">
-        <md-input-container md-no-float class="md-block">
-          <md-icon md-svg-src="app/img/icons/search.svg"></md-icon>
-          <input ng-model="rawQuery" type="text" placeholder="Search">
-        </md-input-container>
-        <md-button class="md-raised md-primary" ng-click="search()">pesquisar</md-button>
-      </div>
-      <div ng-if="query !== ''" class="resultBox">
-        Showing results for: "<span ng-bind-html="query"></span>"
-        <div ng-if="loading" layout="row" layout-sm="column" layout-align="space-around">
-          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    <div ng-controller="searchCtrl" class="container">
+      <div class="row justify-content-center">
+        <div class="form-row align-items-center">
+          <div class="col-auto">
+            <img src="app/img/icons/search.svg">
+          </div>
+          <div class="col-auto">
+            <input type="text" class="form-control" ng-model="rawQuery" type="text" placeholder="Search">
+          </div>
+          <div class="col-auto">
+            <button id="search-button" type="button" class="btn-primary" ng-click="search()">SEARCH</button>        
+          </div>
         </div>
-        <md-list>
-          <md-list-item class="md-3-line" ng-repeat="result in results">
-            <div class="md-list-item-text">
-              <h3>{{result.name}}</h3>
-              <h4><b>{{result.brand}}</b></h4>
+      </div>
+      <div ng-if="query" class="result-box container">
+        Showing results for: "<span ng-bind-html="query"></span>"
+        <div ng-if="loading" class="row justify-content-center">
+          <img src="app/img/loading.gif" />
+        </div>
+        <ul class="list-group result-list">
+          <li class="list-group-item" ng-repeat="result in results">
+            <div class="li-text">
+              {{result.name}}
             </div>            
             <md-divider ng-if="!$last"></md-divider>
-          </md-list-item>
-        </md-list>
+          </li>
+        </ul>
       </div>
-    </md-content>
+    </div>
   `,
 });

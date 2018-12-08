@@ -29,3 +29,17 @@
     width: 50%;
     opacity: 0.3;
 }
+
+#search-button {
+    background-color: #85CE36;
+    border-color: #85CE36;    
+    cursor: pointer;
+}
+
+.result-box {
+    margin-top: 15px;
+}
+
+.result-list {
+    margin-top: 15px;
+}

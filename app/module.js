@@ -1,7 +1,5 @@
 const app = angular.module("app", [
-  'ngMaterial',
   'firebase',
-  'headerModule',
   'sidebarModule',
   'chartCardModule',
   'bars',
@@ -16,6 +14,11 @@ app.config(function config($stateProvider) {
     name: 'home',
     url: '/',
     template: `
+      <p class="flex layout-padding">
+        This project is intended to be a personal learning tool, some kind of sand box, where
+        I can explore some features of AngularJS and Angular Material. Some contents and data
+        may be fictional, so don't take it seriously.
+      </p>
       <chart-card
           title="Doughnut Chart">
       </chart-card>
