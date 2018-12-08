@@ -112,6 +112,12 @@ search.controller('searchCtrl', ($scope, $http) => {
 search.component('search', {
   template: `
     <div ng-controller="searchCtrl" class="container" data-ng-init="init()">
+      <div class="title-block">
+        <h3 class="title"> Up to some clothing? </h3>
+        <p class="title-description">
+          Use this page to search some of the clothing on my store.
+        </p>
+      </div>
       <div ng-if="!initialized" class="row justify-content-center">
         <img src="app/img/loading.gif" />
       </div>
