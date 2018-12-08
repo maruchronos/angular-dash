@@ -5,10 +5,12 @@ search.controller('searchCtrl', ($scope, $http) => {
   $scope.query = '';
   $scope.results = [];
   $scope.loading = true;
+  $scope.initialized = false;
   $scope.types = [];
   $scope.brands = [];
 
-  initialize = () => {
+  $scope.init = () => {
+    // Get brands and Types from DB
     Promise.all([
       $http.get('https://angulardash-b52ea.firebaseio.com/types.json'),
       $http.get('https://angulardash-b52ea.firebaseio.com/brands.json')
@@ -18,7 +20,8 @@ search.controller('searchCtrl', ($scope, $http) => {
 
       const brands = Object.values(value[1].data);
       $scope.brands = brands.map(item => item.name);
-      $scope.loading = false;
+      $scope.initialized = true;
+      $scope.$apply();
     });
   }
 
@@ -98,17 +101,17 @@ search.controller('searchCtrl', ($scope, $http) => {
     $scope.query = $scope.updateQuery($scope.query);
     fetchResults();
   }
-  initialize();
 });
+
 
 // Create component as a new Dom
 search.component('search', {
   template: `
-    <div ng-controller="searchCtrl" class="container">
-      <div class="row justify-content-center">
+    <div ng-controller="searchCtrl" class="container" data-ng-init="init()">
+      <div class="row justify-content-center" ng-if="initialized">
         <div class="form-row align-items-center">
           <div class="col-auto">
-            <img src="app/img/icons/search.svg">
+            <img src="app/img/icons/search.svg">            
           </div>
           <div class="col-auto">
             <input type="text" class="form-control" ng-model="rawQuery" type="text" placeholder="Search">
