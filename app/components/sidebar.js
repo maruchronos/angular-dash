@@ -12,8 +12,10 @@ angular.module('sidebarModule', [])
           </div>
           <nav class="menu" ng-controller="sidebarController">
             <ul id="menu" class="sidebar-menu metismenu">
-              <li ng-class="{'active' : isSelected(item.title)}" ng-repeat="item in menu"> 
-                <a ng-click="focusSection(item.title)"
+              <li
+                ng-class="{ 'active' : isSelected(item.url) }"                
+                ng-repeat="item in menu"> 
+                <a ng-click="focusSection(item.url)"
                   href="{{item.url}}">    
                   <span class="ng-binding ng-scope">                    
                     <img class="menu-icon" src="{{item.icon}}"/>
@@ -25,7 +27,7 @@ angular.module('sidebarModule', [])
           </nav>
         </div>
     </aside>`})
-.controller('sidebarController', ($scope) => {
+.controller('sidebarController', ($scope, $location) => {
     $scope.menu = [
         {
             title: 'Home',
@@ -48,7 +50,7 @@ angular.module('sidebarModule', [])
             icon: 'app/img/icons/store.svg'
         }
     ];
-    $scope.selected = 'Home';
+    $scope.selected = `/#${$location.url()}`;    
     
     $scope.isSelected = (item) => {
         return $scope.selected === item;
@@ -56,6 +58,5 @@ angular.module('sidebarModule', [])
 
     $scope.focusSection = (item) => {
         $scope.selected = item;
-        $scope.toggleSidebar();
     }
 });
