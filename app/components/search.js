@@ -1,7 +1,7 @@
 const search = angular.module('search', ['ngSanitize']);
 
 search.controller('searchCtrl', ($scope, $http) => {
-  $scope.rawQuery = 'Gap Floral Pants';
+  $scope.rawQuery = '';
   $scope.query = '';
   $scope.results = [];
   $scope.loading = true;
@@ -9,7 +9,7 @@ search.controller('searchCtrl', ($scope, $http) => {
   $scope.types = [];
   $scope.brands = [];
 
-  $scope.init = () => {
+  init = () => {
     // Get brands and Types from DB
     Promise.all([
       $http.get('https://angulardash-b52ea.firebaseio.com/types.json'),
@@ -91,7 +91,9 @@ search.controller('searchCtrl', ($scope, $http) => {
       });
   }
 
-  $scope.search = () => {
+  $scope.search = (query) => {
+    $scope.rawQuery = query;
+    // console.log('searching', $scope.rawQuery);
     if ($scope.rawQuery === '') {
       alert('Nothing to search!');
     }
@@ -101,6 +103,8 @@ search.controller('searchCtrl', ($scope, $http) => {
     $scope.query = $scope.updateQuery($scope.query);
     fetchResults();
   }
+
+  init();
 });
 
 
@@ -108,6 +112,9 @@ search.controller('searchCtrl', ($scope, $http) => {
 search.component('search', {
   template: `
     <div ng-controller="searchCtrl" class="container" data-ng-init="init()">
+      <div ng-if="!initialized" class="row justify-content-center">
+        <img src="app/img/loading.gif" />
+      </div>
       <div class="row justify-content-center" ng-if="initialized">
         <div class="form-row align-items-center">
           <div class="col-auto">
@@ -117,7 +124,7 @@ search.component('search', {
             <input type="text" class="form-control" ng-model="rawQuery" type="text" placeholder="Search">
           </div>
           <div class="col-auto">
-            <button id="search-button" type="button" class="btn-primary" ng-click="search()">SEARCH</button>        
+            <button id="search-button" type="button" class="btn-primary" ng-click="search(rawQuery)">SEARCH</button>        
           </div>
         </div>
       </div>
